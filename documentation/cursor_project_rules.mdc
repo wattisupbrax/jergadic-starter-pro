@@ -1,0 +1,108 @@
+---
+description: Apply these rules when making changes to the project
+globs:
+alwaysApply: true
+---
+
+Update this rule if user requested changes to the project requirement, etc.
+## Project Overview
+
+*   **Type:** cursor_project_rules
+*   **Description:**
+    > This repository, `jergadic-starter-pro`, is a modern web application starter project. It provides a structured foundation for UI, API handling, and user authentication integration, enabling rapid development of feature-rich web applications.
+*   **Primary Goal:** Provide a foundational starter for modern web applications with structured UI, API handling, and authentication integration.
+
+## Project Structure
+
+### Framework-Specific Routing
+
+*   **Directory Rules:**
+
+    *   Next.js 14 (App Router): Use the `app/[route]/page.tsx` and `app/[route]/layout.tsx` conventions.
+    *   Next.js (Pages Router): Use the `pages/[route].tsx` pattern if using the Pages Router.
+    *   React Router 6: Use `src/routes/` with `createBrowserRouter` for route definitions.
+
+### Core Directories
+
+*   **Versioned Structure:**
+
+    *   app/api: Next.js 14 API routes with Route Handlers (`route.ts`).
+    *   app/fonts: Next.js 14 asset directory for custom fonts.
+    *   app/globals.css: Global CSS styles for Next.js 14.
+    *   components/providers: Next.js 14 provider components (e.g., ClerkProvider).
+    *   .cursor/rules: Markdown-based project-specific rules and documentation.
+
+### Key Files
+
+*   **Stack-Versioned Patterns:**
+
+    *   app/layout.tsx: Next.js 14 root layout component.
+    *   app/page.tsx: Next.js 14 default page route.
+    *   app/api/webhooks/route.ts: Next.js 14 Route Handler for webhook processing.
+
+## Tech Stack Rules
+
+*   **Version Enforcement:**
+
+    *   next@14: Enforce App Router; disallow `getInitialProps`.
+    *   typescript@5: Enable `strict` mode in `tsconfig.json`.
+    *   clerk@4: Ensure ClerkProvider wraps the root layout.
+
+## PRD Compliance
+
+*   (No PRD provided; follow default conventions as outlined above.)
+
+## App Flow Integration
+
+*   Next.js 14 Auth Flow → `app/layout.tsx` wraps the application with `ClerkProvider`, managing user sessions and authentication context.
+
+## Best Practices
+
+*   Next.js
+    *   Use App Router conventions: colocate `page.tsx`, `layout.tsx`, and `route.ts` files.
+    *   Leverage server components and server actions for data fetching within `app/`.
+    *   Place API logic under `app/api` using Route Handlers.
+    *   Use `next/link` and `next/navigation` for client-side routing.
+
+*   TypeScript
+    *   Enable `strict` mode for maximum type safety.
+    *   Use Zod (or similar) for runtime schema validation in API routes.
+    *   Define shared types in a centralized `types/` directory.
+
+*   CSS / Styling
+    *   Keep global styles in `app/globals.css` and use CSS Modules for component-level styles as needed.
+    *   Optimize font loading with the `next/font` utility.
+
+*   Clerk
+    *   Initialize `ClerkProvider` in the root layout (`app/layout.tsx`).
+    *   Secure API routes by verifying incoming authentication tokens.
+    *   Manage Clerk API keys and secrets via environment variables.
+
+## Rules
+
+*   Derive folder/file patterns **directly** from `techStackDoc` versions.
+*   If using Next.js 14 App Router: Enforce the `app/` directory with nested route folders.
+*   If using Pages Router: Use `pages/*.tsx` flat structure.
+*   Mirror this logic for React Router, SvelteKit, etc.
+*   Never mix version patterns (e.g., no `pages/` directory in App Router projects).
+
+## Rules Metrics
+
+Before starting project development, create a metrics file in the root of the project called:
+
+`cursor_metrics.md`
+
+### Instructions:
+
+*   Each time a cursor rule is used as context, update `cursor_metrics.md`.
+*   Use the following format for `cursor_metrics.md:`
+
+    # Rules Metrics
+
+    ## Usage
+
+    The number of times rules is used as context
+
+    *   rule-name.mdc: 5
+    *   another-rule.mdc: 2
+    *   ...other rules

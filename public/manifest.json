@@ -1,0 +1,59 @@
+{
+  "name": "JergaDic - Diccionario de Jerga en Español",
+  "short_name": "JergaDic",
+  "description": "Diccionario colaborativo de jerga y modismos del español",
+  "theme_color": "#1E40AF",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "lang": "es",
+  "orientation": "portrait-primary",
+  "categories": ["education", "reference", "social"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Buscar jerga",
+      "short_name": "Buscar",
+      "description": "Buscar términos de jerga",
+      "url": "/search",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Enviar término",
+      "short_name": "Enviar",
+      "description": "Enviar nuevo término de jerga",
+      "url": "/submit",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Palabra aleatoria",
+      "short_name": "Aleatoria",
+      "description": "Ver palabra aleatoria",
+      "url": "/random",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "dir": "ltr",
+  "features": [
+    "Cross Platform",
+    "Offline Support",
+    "Spanish Language",
+    "Regional Variations"
+  ]
+}
