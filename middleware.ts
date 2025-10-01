@@ -1,25 +1,51 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server"
-import { NextRequest, NextResponse } from "next/server"
 
-// Default Next.js middleware to allow all requests
-export function middleware(request: NextRequest) {
-  return NextResponse.next()
-}
+// Define protected routes that require authentication
+const isProtectedRoute = createRouteMatcher([
+  '/submit',              // Submit new terms/definitions
+  '/profile(.*)',         // User profile pages  
+  '/admin(.*)',          // Admin dashboard
+  '/api/terms',          // POST requests to create terms
+  '/api/votes(.*)',      // Voting endpoints
+  '/api/comments(.*)',   // Comment endpoints
+  '/api/dichos(.*)',     // Dichos endpoints
+  '/api/flags(.*)',      // Content flagging
+])
 
-/**
- * Uncomment the following code to enable authentication with Clerk
- */
+// Define admin routes that require admin role
+const isAdminRoute = createRouteMatcher([
+  '/admin(.*)',
+  '/api/admin(.*)',
+  '/api/flags(.*)', // Only admins can manage flags
+])
 
-// const isProtectedRoute = createRouteMatcher(['/protected'])
+export default clerkMiddleware(async (auth, req) => {
+  const { userId, sessionClaims } = auth()
+  
+  // Handle admin routes
+  if (isAdminRoute(req)) {
+    if (!userId) {
+      const signInUrl = new URL('/sign-in', req.url)
+      signInUrl.searchParams.set('redirect_url', req.url)
+      return Response.redirect(signInUrl)
+    }
+    
+    // Check if user has admin role (you can customize this logic)
+    const userRole = sessionClaims?.metadata?.role || 'user'
+    if (userRole !== 'admin' && userRole !== 'moderator') {
+      return Response.redirect(new URL('/', req.url))
+    }
+  }
+  
+  // Handle protected routes
+  if (isProtectedRoute(req) && !userId) {
+    const signInUrl = new URL('/sign-in', req.url)
+    signInUrl.searchParams.set('redirect_url', req.url)
+    return Response.redirect(signInUrl)
+  }
 
-// export default clerkMiddleware(async (auth, req) => {
-//     if (isProtectedRoute(req)) {
-//       // Handle protected routes check here
-//       return NextResponse.redirect(req.nextUrl.origin)
-//     }
-
-//     return NextResponse.next()
-// })  
+  return Response.next()
+})  
 
 export const config = {
   matcher: [
